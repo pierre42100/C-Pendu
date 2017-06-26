@@ -73,6 +73,25 @@ void replaceLetter(char *word, char *foundLetters, char letter){
 }
 
 /**
+ * Determine if the game has ended or not
+ * 
+ * @param char foundLetters The found letters
+ * @return 1 if the game has ended / 0 else
+ */
+int is_game_finished(char *foundLetters){
+	
+	for(int i = 0; i<strlen(foundLetters); i++){
+		//Check if the letter is equals to *
+		if(foundLetters[i] == '*')
+			//The game has not ended yet
+			return 0;
+	}
+	
+	//The game has ended
+	return 1;
+}
+
+/**
  * Main function of the project
  */
 int main()
@@ -81,7 +100,8 @@ int main()
     char word[] = "GOOD"; //Word
     int numberOfLetters = strlen(word); //Number of letter
     char lettersFound[numberOfLetters]; //Found letters
-    int end = 0;
+    int lost = 0;
+    int numbersTry = 10;
     char lastLetter = 0;
 
     //Welcome message
@@ -93,10 +113,11 @@ int main()
     populateFound(lettersFound, numberOfLetters);
 
     //This loops runs while the game hasn't ended
-    while(!end){
+    while(!is_game_finished(lettersFound) && !lost){
 		
 		//Print current state of the string
-		printf("\n\nCurrent state of the game: %s\n", lettersFound);
+		printf("\n\nCurrent state of the word: %s\n", lettersFound);
+		printf("Number of lives: %d\n", numbersTry);
 		
         //Ask a letter to the user
         lastLetter = typeLetter();
@@ -113,10 +134,28 @@ int main()
         else {
             //Inform user
             printf("The letter was not found in the string !\n");
+            
+            //Reduce number of try remaining time
+            numbersTry--;
+            
+            //Check if gamer has lost
+            if(numbersTry == 0)
+				lost = 1;
         }
 
     }
-
+	
+	//The game ended
+	printf("\n\n\nYou finished the game. The word was %s. You ", word);
+	if(lost)
+		printf("lost");
+	else
+		printf("won");
+	printf(" the game ... \n");
+	
+	//Goodbye messages
+	printf("This programm was made by Pierre HUBERT in 2017\n");
+	printf("Good bye !\n");
 
     return 0;
 }
