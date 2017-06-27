@@ -11,23 +11,28 @@
 //Include game functions
 #include "game.c"
 
+//Include words functions
+#include "words.c"
 
 /**
  * Main function of the project
+ * 
+ * @return int 0 in case of success
  */
 int main()
 {
+	//Welcome message
+    printf("Welcome to my game! Have fun !\n");
+    printf("Your goal : find the write word...\n");
+	
     //Initialize variables
-    char word[] = "GOOD"; //Word
+    char word[100] = {0};
+    getRandomWord(word); //Generate word
     int numberOfLetters = strlen(word); //Number of letter
     char lettersFound[numberOfLetters]; //Found letters
     int lost = 0;
     int numbersTry = 10;
     char lastLetter = 0;
-
-    //Welcome message
-    printf("Welcome to my game! Have fun !\n");
-    printf("Your goal : find the write word...\n");
 
     //Initilizate game
     //Populate letter found variable
